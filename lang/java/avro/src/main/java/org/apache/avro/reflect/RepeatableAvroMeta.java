@@ -23,8 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Adds the given key:Value pair as metadata into the schema,
- * at the corresponding node.
+ * Allows to use multiple AvroMeta annotations on a property
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD})
