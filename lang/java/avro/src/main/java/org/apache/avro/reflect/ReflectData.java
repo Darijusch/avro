@@ -626,9 +626,17 @@ public class ReflectData extends SpecificData {
               Schema.Field recordField
                 = new Schema.Field(fieldName, fieldSchema, null, defaultValue);
 
-              AvroMeta meta = field.getAnnotation(AvroMeta.class);              // add metadata
-              if (meta != null)
-                recordField.addProp(meta.key(), meta.value());
+              RepeatableAvroMeta metas = field.getAnnotation(RepeatableAvroMeta.class);
+              if (metas != null) {
+                for (AvroMeta avroMeta : metas.value()) {
+                  recordField.addProp(avroMeta.key(), avroMeta.value());
+                }
+              } else {
+                AvroMeta meta = field.getAnnotation(AvroMeta.class);              // add metadata
+                if (meta != null) {
+                  recordField.addProp(meta.key(), meta.value());
+                }
+              }
               for(Schema.Field f : fields) {
                 if (f.name().equals(fieldName))
                   throw new AvroTypeException("double field entry: "+ fieldName);

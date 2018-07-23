@@ -25,8 +25,6 @@ import java.lang.annotation.*;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD})
-@Repeatable(value = RepeatableAvroMeta.class)
-public @interface AvroMeta {
-  String key();
-  String value();
+public @interface RepeatableAvroMeta {
+  AvroMeta[] value();
 }

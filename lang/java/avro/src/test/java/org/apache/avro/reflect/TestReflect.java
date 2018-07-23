@@ -324,7 +324,7 @@ public class TestReflect {
     r9_1.value = r8;
     checkReadWrite(r9_1, ReflectData.get().getSchema(R9_1.class));
   }
-  
+
   // test union annotation on methods and parameters
   public static interface P0 {
     @Union({Void.class,String.class})
@@ -547,6 +547,13 @@ public class TestReflect {
     check(RAvroMeta.class, "{\"type\":\"record\",\"name\":\"RAvroMeta\",\"namespace\":"
           +"\"org.apache.avro.reflect.TestReflect\",\"fields\":["
           +"{\"name\":\"a\",\"type\":\"int\",\"K\":\"V\"}]}");
+  }
+
+  public static class RAvroMetaMultiple { @AvroMeta(key="foo", value="bar") @AvroMeta(key="bar", value="foo") int a; }
+  @Test public void testMultipleAnnotationAvroMeta() throws Exception {
+    check(RAvroMetaMultiple.class, "{\"type\":\"record\",\"name\":\"RAvroMetaMultiple\",\"namespace\":"
+      +"\"org.apache.avro.reflect.TestReflect\",\"fields\":["
+      +"{\"name\":\"a\",\"type\":\"int\",\"foo\":\"bar\",\"bar\":\"foo\"}]}");
   }
 
   public static class RAvroName { @AvroName("b") int a; }
